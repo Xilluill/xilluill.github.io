@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="KV-Edit">
+  <meta name="keywords" content="Image editing, Diffusion, training-free, background preservation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KV-Edit: Training-Free Image Editing for Precise Background Preservation</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script> -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/assets/icon.png">
+
+  <script src="./static/js/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-2 publication-title"><span style="text-decoration: underline;"> KV-Edit</span>: Training-Free Image Editing for Precise Background
+              Preservation</h1>
+            <div class="is-size-4 publication-authors">
+              <span class="author-block">
+                <a href="https://github.com/Xilluill">Tianrui Zhu</a><sup>1*</sup>,</span>
+              <span class="author-block">
+                <a href="https://shiyi-zh0408.github.io">Shiyi Zhang</a><sup>1*</sup>,</span>
+              <span class="author-block">
+                <a href="https://shaojiawei07.github.io">Jiawei Shao</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://andytang15.github.io">Yansong Tang</a><sup>1†</sup>,
+              </span>
+            </div>
+
+            <div class="is-size-4 publication-authors">
+              <span class="author-block"><sup>1</sup> Shenzhen International Graduate School, Tsinghua University</span>
+              <span class="author-block"><sup>2</sup> Institute of Artificial Intelligence (TeleAI), China
+                Telecom</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <span class="link-block">
+                <a href="https://arxiv.org/" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/Xilluill/KV-Edit" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://huggingface.co/spaces" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-play-circle"></i>
+                  </span>
+                  <span>gradio</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <img src="./static/assets/teaser.jpg" alt="teaser" width="100%">
+        <h2 class="subtitle has-text-centered">
+          We propose <span class="KV-Edit">KV-Edit</span> to address the challenge of background preservation in image
+          editing, thereby enhancing thepracticality of AI editing. Rather than designing complex mechanisms, we achieve
+          impressive results by simplypreserving the key-value pairs of the background. Our method effectively handles
+          common semantic editingoperations, including adding, removing, and changing objects.</h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light" style="margin-top: 40px">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-five-fifths">
+          <h2 class="title is-3 has-text-centered"> 🖼 Results </h2>
+          <div class="content has-text-justified">
+            <img src="./static/assets/result_1.jpg" width="100%">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract. -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">💭 Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Background consistency remains a significant challenge in image editing tasks. Despite extensive
+              developments, existing works still face a trade-off between maintaining similarity to the original image
+              and generating content that aligns with the target. Here, we propose <span
+                style="font-weight: bold;">KV-Edit</span>, a training-free approach that uses KV cache in DiTs to
+              maintain background consistency, where background tokens are preserved rather than regenerated,
+              eliminating the need for complex mechanism or expensive training, ultimately generating new content that
+              seamlessly integrates with the background within user-provided regions. We further explore the memory
+              consumption of the KV cache during editing and optimize the space complexity to <span
+                style="font-weight: bold;">O(1)</span> using an inversion-free method. Our approach is compatible with
+              any DiT-based generative model without additional training. Experiments demonstrate that KV-Edit
+              significantly outperforms existing approaches in terms of both background and image quality, even
+              surpassing training-based methods.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--/ Abstract. -->
+
+  <!-- pipeline -->
+  <Section>
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">⭐️ Pipeline</h2>
+
+      <div class="column is-full-width">
+
+        <div class="content has-text-justified">
+          <img src="./static/assets/pipeline.jpg">
+          <p>
+            We implemented KV Cache in our DiT-based generative model, which stores the key-value pairs of background tokens during the inversion process and concatenates them with foreground content during denoising. Since background tokens are preserved rather than regenerated, KV-Edit can strictly maintain background consistency while generating seamlessly integrated new content.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Section>
+  <!-- experiment -->
+  <Section>
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">🗒 Quantitative Comparison</h2>
+
+      <div class="column is-full-width">
+
+        <div class="content has-text-justified">
+          <img src="./static/assets/table.png">
+          <p>
+            <span style="font-weight: bold;">Comparison with previous methods on PIE-Bench.</span> VAE<sup>*</sup> denotes the inherent reconstruction error through direct VAE reconstruction. P2P and MasaCtrl are DDIM-based methods, while RF Inversion and RF Edit are flow-based. BrushEdit and FLUX fill represent training-based methods. <span style="font-weight: bold;">NS</span> indicates there is no skip step during inversion. <span style="font-weight: bold;">RI</span> indicates the addition of reinitialization strategy.<span style="font-weight: bold;">Bold</span> and <span style="text-decoration: underline;">underlined</span> values denote the best and second-best results respectively.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- relate link -->
+  <section class="section"> 
+    <div class="container is-max-desktop">
+      <div class="column is-full-width">
+        <h2 class="title is-4">Related Links</h2>
+        <p>
+          [1] <a href="https://github.com/black-forest-labs/flux/tree/main">FLUX</a>
+        </p>
+        <p>
+          [2] <a href="https://github.com/wangjiangshan0725/RF-Solver-Edit">Taming Rectified Flow for Inversion and
+            Editing</a>
+        </p>
+        <p>
+          [3] <a href="https://github.com/TencentARC/BrushEdit">BrushEdit: All-In-One Image Inpainting and Editing</a>
+        </p>
+        <p>
+          [4] <a href="https://github.com/fallenshock/FlowEdit">FlowEdit: Inversion-Free Text-Based Editing Using
+            Pre-Trained Flow Models</a>
+        </p>
+      </div>
+    </div>
+
+    </div>
+  </section>
+
+  <!-- BibTeX -->
+  <section class="section" style="background-color: #f1f1f1;" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <p>If you find our work useful, please cite our paper:</p>
+      <pre><code>@misc{}, 
+  }</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website is modified from the <a href="https://nerfies.github.io/">Nerfies</a>, which is licensed
+              under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+            <p>
+              This means you are free to borrow the <a href="https://github.com/nerfies/nerfies.github.io">source
+                code</a> of this website,
+              we just ask that you link back to this page in the footer.
+              Please remember to remove the analytics code included in the header of the website which
+              you do not want on your website.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
